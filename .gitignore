@@ -1,0 +1,40 @@
+# Ignore datasets
+dataset/
+*.csv
+*.tsv
+*.xlsx
+*.json
+*.zip
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+venv/
+env/
+.venv/
+
+
+# Ignore model files and checkpoints
+*.hdf5
+*.pb
+*.tflite
+checkpoints/
+Previous Model/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore logs
+*.log
+logs/

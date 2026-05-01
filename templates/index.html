@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>EmoSense AI</title>
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo">🧠</div>
+            <div>
+                <h1>EmoSense AI</h1>
+                <p class="subtitle">Real-Time Facial Emotion Recognition</p>
+            </div>
+        </div>
+        <div class="status-pill" id="cameraStatus">
+            <span class="dot"></span>
+            <span id="statusText">Camera initializing...</span>
+        </div>
+    </header>
+
+    <div class="card">
+
+        <div class="main-grid">
+            <div class="left-panel">
+                <div class="video-wrapper">
+                    <video id="video" autoplay playsinline aria-label="Live webcam preview"></video>
+                    <canvas id="overlay"></canvas>
+                    <div class="glass-overlay" id="processingBadge">Processing...</div>
+                </div>
+
+                <div class="controls">
+                    <button onclick="toggleAuto()" id="autoBtn" class="primary">
+                        <span class="btn-icon">▶</span>
+                        <span class="btn-text">Start Live Detection</span>
+                    </button>
+
+                    <button onclick="detectEmotion()" id="detectBtn" class="secondary">
+                        <span class="btn-icon">📸</span>
+                        <span class="btn-text">Detect Once</span>
+                    </button>
+                </div>
+
+                <div class="hint">
+                    Tip: Center your face and use good lighting for better accuracy.
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="panel-title">Latest Result</div>
+                <div class="result-card">
+                    <div class="result-main">
+                        <div id="emoji" class="emoji">🙂</div>
+                        <div class="result-text">
+                            <div id="emotion" class="emotion">Waiting...</div>
+                            <div id="confidence" class="confidence">--</div>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div id="confidenceBar" class="progress-bar" style="width:0%"></div>
+                    </div>
+                    <div id="topPredictions" class="top-predictions"></div>
+                    <div id="statusMessage" class="status-message">Ready</div>
+                </div>
+                <div class="hint">Live mode runs one prediction every second.</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>
