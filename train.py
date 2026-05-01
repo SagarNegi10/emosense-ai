@@ -7,15 +7,11 @@ from pathlib import Path
 import numpy as np
 import json
 
-# ==============================
 # CPU Thread Optimization (Ryzen 5600H - 12 threads)
-# ==============================
 tf.config.threading.set_intra_op_parallelism_threads(12)
 tf.config.threading.set_inter_op_parallelism_threads(12)
 
-# ==============================
 # Config
-# ==============================
 IMG_SIZE = 48
 BATCH_SIZE = 128
 EPOCHS = 40
@@ -25,9 +21,7 @@ if not Path(DATA_DIR).exists():
 
 tf.keras.utils.set_random_seed(42)
 
-# ==============================
 # Load Dataset with Auto Split
-# ==============================
 train_ds = tf.keras.utils.image_dataset_from_directory(
     DATA_DIR,
     validation_split=0.2,
@@ -67,9 +61,7 @@ class_weight = {
 print("Class counts (train):", class_counts.tolist())
 print("Class weights:", class_weight)
 
-# ==============================
 # Normalization
-# ==============================
 normalization_layer = layers.Rescaling(1./255)
 data_augmentation = keras.Sequential(
     [
@@ -93,9 +85,7 @@ val_ds = val_ds.map(
 train_ds = train_ds.cache().shuffle(20000).prefetch(tf.data.AUTOTUNE)
 val_ds = val_ds.cache().prefetch(tf.data.AUTOTUNE)
 
-# ==============================
 # Model Architecture
-# ==============================
 model = keras.Sequential([
     layers.Input(shape=(48,48,1)),
     data_augmentation,
@@ -142,9 +132,7 @@ model.compile(
 
 model.summary()
 
-# ==============================
 # Callbacks
-# ==============================
 early_stop = EarlyStopping(
     monitor="val_accuracy",
     patience=8,
@@ -167,9 +155,7 @@ reduce_lr = ReduceLROnPlateau(
     verbose=1
 )
 
-# ==============================
 # Train
-# ==============================
 history = model.fit(
     train_ds,
     validation_data=val_ds,
@@ -180,9 +166,7 @@ history = model.fit(
 
 print("Training Complete. Best model saved as emotion_model.keras")
 
-# ==============================
 # Validation Diagnostics (TTA + Confusion Matrix + Per-class Metrics)
-# ==============================
 all_y_true = []
 all_y_pred = []
 
@@ -222,9 +206,7 @@ for i, name in enumerate(class_names):
 
 print(f"\nMacro F1: {np.mean(f1):.4f}")
 
-# ==============================
 # Plot Accuracy + Confusion Matrix
-# ==============================
 plt.plot(history.history['accuracy'], label='Train Accuracy')
 plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
 plt.legend()
